@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>824</width>
-    <height>539</height>
+    <width>819</width>
+    <height>548</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,7 @@
    <bool>false</bool>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -66,7 +66,7 @@
                </widget>
               </item>
               <item row="0" column="2">
-               <widget class="QPushButton" name="pushButton_2">
+               <widget class="QPushButton" name="btn_refresh">
                 <property name="text">
                  <string/>
                 </property>
@@ -84,7 +84,7 @@
                </widget>
               </item>
               <item row="1" column="1" colspan="2">
-               <widget class="QPushButton" name="pushButton">
+               <widget class="QPushButton" name="btn_connect">
                 <property name="text">
                  <string>点击连接</string>
                 </property>
@@ -124,14 +124,14 @@
                </widget>
               </item>
               <item row="1" column="1">
-               <widget class="QLabel" name="label_6">
+               <widget class="QLabel" name="label_bluetooth_addr">
                 <property name="text">
                  <string>空</string>
                 </property>
                </widget>
               </item>
               <item row="0" column="1">
-               <widget class="QLabel" name="label_4">
+               <widget class="QLabel" name="label_bluetooth_name">
                 <property name="minimumSize">
                  <size>
                   <width>180</width>
@@ -194,7 +194,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>700</x>
@@ -219,7 +219,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_3">
+      <widget class="QPushButton" name="btn_clr_rev">
        <property name="text">
         <string>清空接收区</string>
        </property>
@@ -227,7 +227,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>700</x>
@@ -238,14 +238,14 @@
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_7">
      <item>
-      <widget class="QPushButton" name="pushButton_4">
+      <widget class="QPushButton" name="btn_clr_send">
        <property name="text">
         <string>清空发送</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QCheckBox" name="checkBox_3">
+      <widget class="QCheckBox" name="checkBox_hex_send">
        <property name="text">
         <string>HEX发送</string>
        </property>
@@ -259,7 +259,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_5">
+      <widget class="QPushButton" name="btn_send">
        <property name="minimumSize">
         <size>
          <width>0</width>
@@ -279,7 +279,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>824</width>
+     <width>819</width>
      <height>23</height>
     </rect>
    </property>
