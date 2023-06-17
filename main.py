@@ -1,6 +1,13 @@
+import threading
+
+import bluetooth
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
+from drivers import *
+from drivers import driver_bluetooth
+import bluetooth_widget
+
 import sys
 
 from ui.Ui_main_window import Ui_MainWindow
@@ -12,36 +19,27 @@ class ToolBoxMainWindow(QMainWindow):
         super().__init__(parent)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        # 创建BluetoothWidget类的对象
+        self.blt_widget = bluetooth_widget.BluetoothWidget("蓝牙")
 
         self.init_ui()
 
-    def on_refresh_clicked(self):
-        print("refresh...")
-
-    def on_connect_clicked(self):
-        print("connect...")
-
-    def on_clr_rev_clicked(self):
-        print("clr rev...")
-
-    def on_clr_send_clicked(self):
-        print("clr send...")
-
-    def on_send_clicked(self):
-        print("send...")
-
     def init_ui(self):
-        # 给刷新按钮绑定事件
-        self.ui.btn_refresh.clicked.connect(self.on_refresh_clicked)
-        # 给连接按钮绑定事件
-        self.ui.btn_connect.clicked.connect(self.on_connect_clicked)
-        # 给清空接收区按钮绑定事件
-        self.ui.btn_clr_rev.clicked.connect(self.on_clr_rev_clicked)
-        self.ui.btn_clr_send.clicked.connect(self.on_clr_send_clicked)
-        self.ui.btn_send.clicked.connect(self.on_send_clicked)
+        # 把bluetooth_widget绑定到tab中
+        self.ui.tabWidget.addTab(self.blt_widget, "蓝牙调试工具")
+        # 开一个子线程执行bluetooth中的scan_devices
+        # sub_thread = threading.Thread(target=driver_bluetooth.scan_devices)
+        # 开一个子线程执行bluetooth_widget中的get_devices
+        sub_thread = threading.Thread(target=self.blt_widget.get_devices)
+
+        # 设置守护主线程
+        sub_thread.setDaemon(True)
+        # 启动子线程
+        sub_thread.start()
 
 
 if __name__ == '__main__':
+
     app = QApplication(sys.argv)
 
     window = ToolBoxMainWindow()

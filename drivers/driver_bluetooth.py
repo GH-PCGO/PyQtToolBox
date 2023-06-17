@@ -1,18 +1,20 @@
 import bluetooth
 
-
 # 扫描所有设备
+from PyQt5.QtCore import pyqtSignal
+
+
 def scan_devices():
     """
     扫描所有蓝牙设备
     :return:
     """
-    devices = bluetooth.discover_devices()
     print("Scanning devices...")
     device_list = []
+    devices = bluetooth.discover_devices()
     for addr in devices:
         name = bluetooth.lookup_name(addr)
-        print("Found device:", name, "(", addr, ")")
+        # print("Found device:", name, "(", addr, ")")
         device_list.append((addr, name))
     return device_list
 
@@ -79,11 +81,14 @@ class BluetoothDataTransfer:
         else:
             print("Not connected.")
 
-
-if __name__ == '__main__':
-    # scan_devices()
-    bd = BluetoothDataTransfer("B7:7B:1A:07:10:0B", "PCPC", 1)  # 替换为目标设备的蓝牙地址和端口号
-    bd.connect()
-    bd.send_data("Hello, Bluetooth!")  # 发送数据
-    bd.receive_data()  # 接收数据
-    bd.disconnect()
+# if __name__ == '__main__':
+#     print("-------------开始扫描")
+#     devices = BluetoothDataTransfer.scan_devices()
+#     for device in devices:
+#         print(device)
+#     print("-------------扫描结束")
+#     bd = BluetoothDataTransfer("B7:7B:1A:07:10:0B", "PCPC", 1)  # 替换为目标设备的蓝牙地址和端口号
+#     bd.connect()
+#     bd.send_data("Hello, Bluetooth!")  # 发送数据
+#     bd.receive_data()  # 接收数据
+#     bd.disconnect()
