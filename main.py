@@ -1,12 +1,7 @@
 import threading
 
-import bluetooth
 from PyQt5.QtWidgets import *
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
-from drivers import *
-from drivers import driver_bluetooth
-import bluetooth_widget
+from widgets import bluetooth_widget
 
 import sys
 

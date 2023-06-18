@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Form</class>
- <widget class="QWidget" name="Form">
+ <class>WidgetBlt</class>
+ <widget class="QWidget" name="WidgetBlt">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>冲沖衝的工具箱</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_2">
    <item>
@@ -64,8 +64,8 @@ border: none;</string>
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset>
-                  <normaloff>../res/refresh.png</normaloff>../res/refresh.png</iconset>
+                 <iconset resource="resource.qrc">
+                  <normaloff>:/icon/icon/refresh.png</normaloff>:/icon/icon/refresh.png</iconset>
                 </property>
                </widget>
               </item>
@@ -142,6 +142,19 @@ border: none;</string>
           </widget>
          </item>
         </layout>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btn_remote_controller">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>50</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>遥控器</string>
+         </property>
+        </widget>
        </item>
        <item>
         <spacer name="verticalSpacer">
@@ -264,6 +277,8 @@ border: none;</string>
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="resource.qrc"/>
+ </resources>
  <connections/>
 </ui>

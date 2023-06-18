@@ -1,7 +1,12 @@
+import binascii
+
 import bluetooth
 
 # 扫描所有设备
 from PyQt5.QtCore import pyqtSignal
+# 从common包导入hex_util
+from common import hex_util
+from common.hex_util import string_to_hex_string
 
 
 def scan_devices():
@@ -64,6 +69,28 @@ class BluetoothDataTransfer:
                 print("Failed to send data:", str(e))
         else:
             print("Not connected.")
+
+    def send_hex_data(self, data):
+        """
+        将输入的数据转换为十六进制格式后发送到 socket
+        :param data:
+        """
+        if self.socket is not None:
+            try:
+                # data = bytes([0x01])
+                # self.socket.send(data)
+                # 将字符串转换为字节数据
+                byte_data = bytes([int(data, 16)])
+                # 发送数据
+
+                print(byte_data)
+                self.socket.send(byte_data)
+            except Exception as e:
+                # 出现异常
+                print(f"Failed to send data in HEX format: {str(e)}")
+        else:
+            # socket 未连接
+            print("Socket is not connected.")
 
     def receive_data(self, buffer_size=1024):
         """

@@ -5,15 +5,18 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 import sys
 from drivers import driver_bluetooth
-from ui.Ui_widget_bluetooth import Ui_BluetoothWidget
+from ui.Ui_widget_bluetooth import Ui_WidgetBlt
+from widgets import remote_controller_dialog
+from widgets.remote_controller_dialog import RemoteCotrolcontrollerDialog
 
 
 class BluetoothWidget(QWidget):
 
     def __init__(self, title):
         super().__init__()
+        self.blt = None
         self.devices = None
-        self.ui = Ui_BluetoothWidget()
+        self.ui = Ui_WidgetBlt()
         self.ui.setupUi(self)
         self.setWindowTitle(title)
 
@@ -66,9 +69,9 @@ class BluetoothWidget(QWidget):
             if device[1] == self.ui.comboBox_device.currentText():
                 blt_address = device[0]
                 break
-        blt = driver_bluetooth.BluetoothDataTransfer(blt_address, blt_name, 1)
+        self.blt = driver_bluetooth.BluetoothDataTransfer(blt_address, blt_name, 1)
         try:
-            sub_thread = threading.Thread(target=blt.connect())
+            sub_thread = threading.Thread(target=self.blt.connect())
 
             # 设置守护主线程
             sub_thread.setDaemon(True)
@@ -85,7 +88,7 @@ class BluetoothWidget(QWidget):
             print("连接失败", e)
 
     def on_clr_rev_clicked(self):
-        print("clr rev...")
+        pass
 
     def on_clr_send_clicked(self):
         # 点击清空发送框的数据
@@ -94,10 +97,22 @@ class BluetoothWidget(QWidget):
 
     def on_send_clicked(self):
         send_msg = self.ui.edit_send.toPlainText()
-        print(send_msg)
+        try:
+            self.blt.send_hex_data(send_msg)
+        except Exception as e:
+            print(e)
+
+    def on_remote_controller_clicked(self):
+        if self.blt:
+            dialog = RemoteCotrolcontrollerDialog(self, self.blt)
+            dialog.show()
+        else:
+            QMessageBox.warning(self, "警告", "请先连接蓝牙设备！")
+        print("clr rev...")
 
     def run_scanner(self):
         pass
+
 
     def init_ui(self):
         # 给刷新按钮绑定事件
@@ -108,6 +123,7 @@ class BluetoothWidget(QWidget):
         self.ui.btn_clr_rev.clicked.connect(self.on_clr_rev_clicked)
         self.ui.btn_clr_send.clicked.connect(self.on_clr_send_clicked)
         self.ui.btn_send.clicked.connect(self.on_send_clicked)
+        self.ui.btn_remote_controller.clicked.connect(self.on_remote_controller_clicked)
 
 # if __name__ == '__main__':
 #     app = QApplication(sys.argv)
