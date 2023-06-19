@@ -70,6 +70,7 @@ class RemoteCotrolcontrollerDialog(QDialog):
         self.ui.btn_surround.clicked.connect(self.on_surround_clicked)
         self.ui.btn_track.clicked.connect(self.on_track_clicked)
 
+
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     dialog = RemoteCotrolcontrollerDialog()

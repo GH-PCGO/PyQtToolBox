@@ -14,8 +14,10 @@ class BluetoothWidget(QWidget):
 
     def __init__(self, title):
         super().__init__()
+        # 当前连接的BluetoothDataTransfer对象
         self.blt = None
-        self.devices = None
+        # 扫描到的设备列表
+        self.devices = []
         self.ui = Ui_WidgetBlt()
         self.ui.setupUi(self)
         self.setWindowTitle(title)
@@ -38,6 +40,7 @@ class BluetoothWidget(QWidget):
     #     # 打印device_list
     #     print(device_list)
     def get_devices(self):
+
         self.devices = driver_bluetooth.scan_devices()
         # 打印device_list
         # print("Found device:", name, "(", addr, ")")
@@ -46,6 +49,9 @@ class BluetoothWidget(QWidget):
             # print(type(device))
             print(f"设备名：{device[1]} \t设备地址：{device[0]}\r\n")
             self.ui.comboBox_device.addItem(device[1])
+
+    def refresh(self):
+        pass
 
     def on_refresh_clicked(self):
         """
@@ -62,14 +68,16 @@ class BluetoothWidget(QWidget):
 
     def on_connect_clicked(self):
         print("connecting...")
-        # 根据设备名找到目标设备地址
-        blt_name = self.ui.comboBox_device.currentText()
-        for device in self.devices:
-            # 如果设备名匹配，就打印设备地址并退出循环
-            if device[1] == self.ui.comboBox_device.currentText():
-                blt_address = device[0]
-                break
-        self.blt = driver_bluetooth.BluetoothDataTransfer(blt_address, blt_name, 1)
+        # # 根据设备名找到目标设备地址
+        # blt_name = self.ui.comboBox_device.currentText()
+        # for device in self.devices:
+        #     # 如果设备名匹配，就打印设备地址并退出循环
+        #     if device[1] == self.ui.comboBox_device.currentText():
+        #         blt_address = device[0]
+        #         break
+        blt_index = self.ui.comboBox_device.currentIndex()
+        print("地址：{} \t 名字：{}".format(self.devices[blt_index][0], self.devices[blt_index][1]))
+        self.blt = driver_bluetooth.BluetoothDataTransfer(self.devices[blt_index][0], self.devices[blt_index][1], 1)
         try:
             sub_thread = threading.Thread(target=self.blt.connect())
 
@@ -86,6 +94,7 @@ class BluetoothWidget(QWidget):
             TODO    弹窗提示或者状态栏提示
             """
             print("连接失败", e)
+        self.ui.btn_connect.setText("断开连接")
 
     def on_clr_rev_clicked(self):
         pass
@@ -112,7 +121,6 @@ class BluetoothWidget(QWidget):
 
     def run_scanner(self):
         pass
-
 
     def init_ui(self):
         # 给刷新按钮绑定事件
